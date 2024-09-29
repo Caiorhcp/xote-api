@@ -16,7 +16,7 @@ const Events = mongoose.model('Event', {
 });
 
 // Rota para listar todos os eventos
-app.get("/", async (req, res) => {
+app.get("/xote", async (req, res) => {
     try {
         const events = await Events.find(); 
         return res.send(events);
@@ -26,7 +26,7 @@ app.get("/", async (req, res) => {
 });
 
 // Rota para listar um evento por ID
-app.get("/:id", async (req, res) => {
+app.get("/xote/:id", async (req, res) => {
     try {
         const event = await Events.findById(req.params.id);  
         if (!event) {
@@ -39,7 +39,7 @@ app.get("/:id", async (req, res) => {
 });
 
 // Rota para criar um novo evento
-app.post("/", async (req, res) => {
+app.post("/xote", async (req, res) => {
     const event = new Events({
         title: req.body.title,
         description: req.body.description,
@@ -56,7 +56,7 @@ app.post("/", async (req, res) => {
 });
 
 // Rota para atualizar um evento por ID
-app.put("/:id", async(req, res) => {
+app.put("/xote/:id", async(req, res) => {
     try {
         const event = await Events.findByIdAndUpdate(req.params.id, { 
             title: req.body.title,
@@ -77,7 +77,7 @@ app.put("/:id", async(req, res) => {
 });
 
 // Rota para deletar um evento por ID
-app.delete("/:id", async(req, res) => {
+app.delete("/xote/:id", async(req, res) => {
     try {
         const event = await Events.findByIdAndDelete(req.params.id);
         if (!event) {

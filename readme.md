@@ -140,6 +140,6 @@ Manutenção: Ao isolar o código em camadas, identificar e corrigir erros se to
 
 ## Developers:
 
-# Caio Gonçalves 
-# Giovanny Lucas
-# Lucas Vieira
+### Caio Gonçalves 
+### Giovanny Lucas
+### Lucas Vieira

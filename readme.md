@@ -1,6 +1,6 @@
 # XoteCariri API
 
-A XoteCariri API é uma API para gerenciar eventos na plataforma XoteCariri. Esta documentação orienta você sobre como configurar e utilizar a API.
+A XoteCariri API é uma API desenvolvida para gerenciar eventos na plataforma XoteCariri, que conecta os usuários a eventos na região de Juazeiro do Norte e Cariri. A API foi construída utilizando o padrão MVC (Model-View-Controller) para melhor organização e manutenibilidade do código.
 
 ## Pré-requisitos
 
@@ -15,14 +15,16 @@ Antes de começar, certifique-se de ter os seguintes softwares instalados:
 1. **Clone o Repositório**
 
    ```bash
-   git clone https://github.com/seu_usuario/xotecariri.git
-   cd xotecariri
+   git clone https://github.com/Caiorhcp/xote-api.git
+   cd xote-api
 
 2. Instale as Dependências
 
 ```bash
-npm install
+npm install 
 ```
+
+
 3. Configuração do Banco de Dados
 
 Crie um banco de dados no MongoDB ou utilize um cluster no MongoDB Atlas.
@@ -38,10 +40,10 @@ module.exports = {
 
 Execute o seguinte comando no terminal:
 ```bash
-node src/index.js
+node app.js
 ```
 
-O servidor deve iniciar e você verá a mensagem "app running" no terminal.
+O servidor deve iniciar e você verá a mensagem "app running" no terminal + "Conectado ao banco de dados" caso estiver usando o MongoDb.
 
 
 ## Como Utilizar a API
@@ -93,3 +95,51 @@ Deletar um evento por ID
 Método: DELETE
 URL: http://localhost:3000/xote/{id} (substitua {id} pelo ID do evento)
 Descrição: Deleta um evento específico.
+
+
+## Estrutura do Projeto
+
+O projeto segue o padrão MVC (Model-View-Controller), que ajuda a organizar e separar as responsabilidades do código. Isso facilita a manutenção, escalabilidade e entendimento do projeto.
+
+## Padrão MVC
+
+Model (Modelo): Representa a estrutura dos dados e as interações com o banco de dados. Na XoteCariri API, o modelo de eventos é definido utilizando o Mongoose.
+View (Visualização): Como estamos desenvolvendo uma API, o conceito de "view" é tratado como as respostas JSON enviadas aos clientes, que podem ser consumidas por qualquer front-end ou outra aplicação.
+Controller (Controlador): Responsável por lidar com as requisições, realizar as operações de negócio e devolver a resposta apropriada. Os controladores manipulam as requisições HTTP e interagem com os modelos.
+Estrutura de Diretórios
+
+```bash
+/project-root
+│
+├── /controllers      # Controladores para gerenciar a lógica das requisições
+│   └── eventController.js
+│
+├── /models           # Modelos do Mongoose para definir a estrutura dos dados
+│   └── eventModel.js
+│
+├── /routes           # Definição das rotas da API
+│   └── eventRoutes.js
+│
+├── /config           # Arquivos de configuração, como a conexão com o banco de dados
+│   └── database.js
+│
+├── app.js            # Arquivo principal da aplicação, onde as rotas e o servidor são configurados
+├── .env              # Variáveis de ambiente
+├── package.json      # Arquivo de configuração do Node.js
+```
+
+## Benefícios do uso de MVC
+O padrão MVC é uma abordagem amplamente utilizada em sistemas maiores devido à separação de responsabilidades:
+
+Organização: O código fica mais modular, fácil de entender e de manter.
+Reusabilidade: Facilita o reaproveitamento de componentes do código (controladores e modelos).
+Escalabilidade: Com a separação de lógica de controle, regras de negócios e dados, é mais fácil adicionar novas funcionalidades sem gerar dependências desnecessárias.
+Manutenção: Ao isolar o código em camadas, identificar e corrigir erros se torna mais simples.
+
+# Obrigado pela atenção
+
+## Developers:
+
+# Caio Gonçalves 
+# Giovanny Lucas
+# Lucas Vieira

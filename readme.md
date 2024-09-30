@@ -26,9 +26,9 @@ npm install
 
 
 3. Configuração do Banco de Dados
+Crie um banco de dados no MongoDB ou utilize um cluster no MongoDB Atlas. Em seguida, crie um arquivo .env na raiz do projeto e adicione a seguinte variável de ambiente, substituindo <USERNAME> e <PASSWORD> pelas suas credenciais do MongoDB:
 
-Crie um banco de dados no MongoDB ou utilize um cluster no MongoDB Atlas.
-Crie um arquivo chamado config.js na raiz do projeto e adicione as seguintes linhas, substituindo <USERNAME> e <PASSWORD> pelas suas credenciais do MongoDB:
+Exemplo figurativo
 
 ```bash
 module.exports = {
@@ -52,12 +52,12 @@ Após iniciar o servidor, você pode utilizar o Postman para interagir com a API
 
 Obter todos os eventos
 
-Método: GET
+1. Método: GET
 URL: http://localhost:3000/xote
-Descrição: Retorna todos os eventos.
+Descrição: Retorna todos os eventos.    
 Criar um novo evento
 
-Método: POST
+2. Método: POST
 URL: http://localhost:3000/xote
 Body: Selecione raw e JSON e insira o seguinte:
 
@@ -72,10 +72,11 @@ Body: Selecione raw e JSON e insira o seguinte:
 Descrição: Cria um novo evento e retorna o evento criado.
 Obter um evento por ID
 
-Método: GET
+3. Método: GET
 URL: http://localhost:3000/xote/{id} (substitua {id} pelo ID do evento)
 Descrição: Retorna os detalhes de um evento específico.
-Atualizar um evento por ID
+
+4. Atualizar um evento por ID
 
 Método: PUT
 URL: http://localhost:3000/xote/{id} (substitua {id} pelo ID do evento)
@@ -90,7 +91,8 @@ Body: Selecione raw e JSON e insira o seguinte:
 }
 ```
 Descrição: Atualiza um evento específico e retorna o evento atualizado.
-Deletar um evento por ID
+
+5. Deletar um evento por ID
 
 Método: DELETE
 URL: http://localhost:3000/xote/{id} (substitua {id} pelo ID do evento)

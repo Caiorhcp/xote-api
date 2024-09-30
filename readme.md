@@ -16,8 +16,7 @@ Antes de começar, certifique-se de ter os seguintes softwares instalados:
 
    ```bash
    git clone https://github.com/Caiorhcp/xote-api.git
-   cd xote-api
-
+   ``` 
 2. Instale as Dependências
 
 ```bash
@@ -54,10 +53,11 @@ Obter todos os eventos
 
 1. Método: GET
 URL: http://localhost:3000/xote
-Descrição: Retorna todos os eventos.    
-Criar um novo evento
+Descrição: Retorna todos os eventos. 
 
-2. Método: POST
+2. Criar um novo evento
+
+Método: POST
 URL: http://localhost:3000/xote
 Body: Selecione raw e JSON e insira o seguinte:
 
@@ -70,9 +70,10 @@ Body: Selecione raw e JSON e insira o seguinte:
 }
 ```
 Descrição: Cria um novo evento e retorna o evento criado.
-Obter um evento por ID
 
-3. Método: GET
+3. Obter um evento por ID
+
+Método: GET
 URL: http://localhost:3000/xote/{id} (substitua {id} pelo ID do evento)
 Descrição: Retorna os detalhes de um evento específico.
 

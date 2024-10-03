@@ -2,7 +2,7 @@
 
 A XoteCariri API é uma API desenvolvida para gerenciar eventos na plataforma XoteCariri, que conecta os usuários a eventos na região de Juazeiro do Norte e Cariri. A API foi construída utilizando o padrão MVC (Model-View-Controller) para melhor organização e manutenibilidade do código.
 
-obs: lindk do postman https://www.postman.com/caio44/db-xote/collection/4htoo13/xote-api
+obs: link do postman https://www.postman.com/caio44/db-xote/collection/4htoo13/xote-api
 
 ## Pré-requisitos
 

@@ -4,7 +4,7 @@ A XoteCariri API é uma API desenvolvida para gerenciar eventos na plataforma Xo
 
 
 ## Pré-requisitos
-
+obs: link do postman https://www.postman.com/caio44/db-xote/collection/4htoo13/xote-api
 Antes de começar, certifique-se de ter os seguintes softwares instalados:
 
 - [Node.js](https://nodejs.org/) (versão 14 ou superior)

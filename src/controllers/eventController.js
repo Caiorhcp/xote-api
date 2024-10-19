@@ -9,6 +9,7 @@ exports.getAllEvents = async (req, res) => {
             count: events.length,
         });
     } catch (error) {
+        console.error(error); // Log de erro
         res.status(500).send("Erro ao listar eventos");
     }
 };
@@ -22,21 +23,29 @@ exports.getEventById = async (req, res) => {
         }
         res.send({ event });
     } catch (error) {
-        res.status(500).send("Erro ao procurar evento por id");
+        console.error(error); // Log de erro
+        res.status(500).send("Erro ao procurar evento por ID");
     }
 };
 
 // Criar um novo evento
 exports.createEvent = async (req, res) => {
+    const { image_url, title, description, date, time, type, pay, localgoogleurl } = req.body;
+
+    // Validação simples
+    if (!title || !description || !date) {
+        return res.status(400).send("Os campos 'title', 'description' e 'date' são obrigatórios.");
+    }
+
     const event = new Event({
-        image_url: req.body.image_url,
-        title: req.body.title,
-        description: req.body.description,
-        date: req.body.date,
-        time: req.body.time,
-        type: req.body.type,
-        pay: req.body.pay,
-        localgoogleurl: req.body.localgoogleurl,
+        image_url,
+        title,
+        description,
+        date,
+        time,
+        type,
+        pay,
+        localgoogleurl,
     });
 
     try {
@@ -46,24 +55,33 @@ exports.createEvent = async (req, res) => {
             event,
         });
     } catch (error) {
+        console.error(error); // Log de erro
         res.status(500).send("Erro ao criar evento");
     }
 };
 
 // Atualizar um evento por ID
 exports.updateEvent = async (req, res) => {
+    const { image_url, title, description, date, time, type, pay, localgoogleurl } = req.body;
+
+    // Validação simples
+    if (!title || !description || !date) {
+        return res.status(400).send("Os campos 'title', 'description' e 'date' são obrigatórios.");
+    }
+
     try {
         const event = await Event.findByIdAndUpdate(req.params.id, {
-            image_url: req.body.image_url,
-            title: req.body.title,
-            description: req.body.description,
-            date: req.body.date,
-            time: req.body.time,
-            type: req.body.type,
-            pay: req.body.pay,
-            localgoogleurl: req.body.localgoogleurl,
+            image_url,
+            title,
+            description,
+            date,
+            time,
+            type,
+            pay,
+            localgoogleurl,
         }, {
-            new: true 
+            new: true,
+            runValidators: true // Isso ajuda a garantir que os dados sejam válidos conforme o esquema
         });
 
         if (!event) {
@@ -75,6 +93,7 @@ exports.updateEvent = async (req, res) => {
             event,
         });
     } catch (error) {
+        console.error(error); // Log de erro
         res.status(500).send("Erro ao atualizar evento");
     }
 };
@@ -91,6 +110,7 @@ exports.deleteEvent = async (req, res) => {
             event,
         });
     } catch (error) {
+        console.error(error); // Log de erro
         res.status(500).send("Erro ao deletar evento");
     }
 };

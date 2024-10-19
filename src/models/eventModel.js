@@ -9,8 +9,6 @@ const eventSchema = new mongoose.Schema({
     pay: { type: Boolean, required: true },
     type: { type: String, required: true },
     localgoogleurl: { type: String, required: true },
-    
-
 });
 
 const Event = mongoose.model('Event', eventSchema);

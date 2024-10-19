@@ -5,7 +5,8 @@ exports.getAllEvents = async (req, res) => {
     try {
         const events = await Event.find();
         res.send({
-            XoteEventos: events
+            XoteEventos: events,
+            count: events.length,
         });
     } catch (error) {
         res.status(500).send("Erro ao listar eventos");
@@ -19,7 +20,7 @@ exports.getEventById = async (req, res) => {
         if (!event) {
             return res.status(404).send("Evento não encontrado!");
         }
-        res.send(event);
+        res.send({ event });
     } catch (error) {
         res.status(500).send("Erro ao procurar evento por id");
     }
@@ -40,7 +41,10 @@ exports.createEvent = async (req, res) => {
 
     try {
         await event.save();
-        res.status(201).send(event);
+        res.status(201).send({
+            message: "Evento criado com sucesso",
+            event,
+        });
     } catch (error) {
         res.status(500).send("Erro ao criar evento");
     }
@@ -50,23 +54,26 @@ exports.createEvent = async (req, res) => {
 exports.updateEvent = async (req, res) => {
     try {
         const event = await Event.findByIdAndUpdate(req.params.id, {
-        image_url: req.body.image_url,
-        title: req.body.title,
-        description: req.body.description,
-        date: req.body.date,
-        time: req.body.time,
-        type: req.body.type,
-        pay: req.body.pay,
-        localgoogleurl: req.body.localgoogleurl,
+            image_url: req.body.image_url,
+            title: req.body.title,
+            description: req.body.description,
+            date: req.body.date,
+            time: req.body.time,
+            type: req.body.type,
+            pay: req.body.pay,
+            localgoogleurl: req.body.localgoogleurl,
         }, {
-             new: true 
-            });
+            new: true 
+        });
 
         if (!event) {
             return res.status(404).send("Evento não encontrado");
         }
 
-        res.send(event);
+        res.send({
+            message: "Evento atualizado com sucesso",
+            event,
+        });
     } catch (error) {
         res.status(500).send("Erro ao atualizar evento");
     }
@@ -79,7 +86,10 @@ exports.deleteEvent = async (req, res) => {
         if (!event) {
             return res.status(404).send("Evento não encontrado");
         }
-        res.send(event);
+        res.send({
+            message: "Evento deletado com sucesso",
+            event,
+        });
     } catch (error) {
         res.status(500).send("Erro ao deletar evento");
     }

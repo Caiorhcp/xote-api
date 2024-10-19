@@ -9,10 +9,10 @@ router.use((req, res, next) => {
 });
 
 // Roteadores de eventos
-router.get('/', eventController.getAllEvents);         // Obter todos os eventos
-router.get('/:id', eventController.getEventById);      // Obter evento por ID
-router.post('/', eventController.createEvent);         // Criar novo evento
-router.put('/:id', eventController.updateEvent);       // Atualizar evento por ID
-router.delete('/:id', eventController.deleteEvent);    // Deletar evento por ID
+router.get('/get', eventController.getAllEvents);         // Obter todos os eventos
+router.get('/get/:id', eventController.getEventById);      // Obter evento por ID
+router.post('/post', eventController.createEvent);         // Criar novo evento
+router.put('/put/:id', eventController.updateEvent);       // Atualizar evento por ID
+router.delete('/delete/:id', eventController.deleteEvent);    // Deletar evento por ID
 
 module.exports = router;

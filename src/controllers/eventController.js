@@ -32,11 +32,6 @@ exports.getEventById = async (req, res) => {
 exports.createEvent = async (req, res) => {
     const { image_url, title, description, date, time, type, pay, localgoogleurl } = req.body;
 
-    // Validação simples
-    if (!title || !description || !date) {
-        return res.status(400).send("Os campos 'title', 'description' e 'date' são obrigatórios.");
-    }
-
     const event = new Event({
         image_url,
         title,
@@ -63,11 +58,6 @@ exports.createEvent = async (req, res) => {
 // Atualizar um evento por ID
 exports.updateEvent = async (req, res) => {
     const { image_url, title, description, date, time, type, pay, localgoogleurl } = req.body;
-
-    // Validação simples
-    if (!title || !description || !date) {
-        return res.status(400).send("Os campos 'title', 'description' e 'date' são obrigatórios.");
-    }
 
     try {
         const event = await Event.findByIdAndUpdate(req.params.id, {

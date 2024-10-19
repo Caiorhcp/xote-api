@@ -33,8 +33,8 @@ exports.createEvent = async (req, res) => {
     const { image_url, title, description, date, time, type, pay, localgoogleurl } = req.body;
 
     // Validação simples
-    if (!title || !description || !date) {
-        return res.status(400).send("Os campos 'title', 'description' e 'date' são obrigatórios.");
+    if (!title || !description || !date || !time || !type || localgoogleurl === undefined || pay === undefined) {
+        return res.status(400).send("Todos os campos são obrigatórios.");
     }
 
     const event = new Event({
@@ -65,8 +65,8 @@ exports.updateEvent = async (req, res) => {
     const { image_url, title, description, date, time, type, pay, localgoogleurl } = req.body;
 
     // Validação simples
-    if (!title || !description || !date) {
-        return res.status(400).send("Os campos 'title', 'description' e 'date' são obrigatórios.");
+    if (!title || !description || !date || !time || !type || localgoogleurl === undefined || pay === undefined) {
+        return res.status(400).send("Todos os campos são obrigatórios.");
     }
 
     try {

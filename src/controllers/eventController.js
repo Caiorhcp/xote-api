@@ -33,8 +33,8 @@ exports.createEvent = async (req, res) => {
     const { image_url, title, description, date, time, type, pay, localgoogleurl } = req.body;
 
     // Validação simples
-    if (!title || !description || !date || !time || !type || localgoogleurl === undefined || pay === undefined) {
-        return res.status(400).send("Todos os campos são obrigatórios.");
+    if (!title || !description || !date) {
+        return res.status(400).send("Os campos 'title', 'description' e 'date' são obrigatórios.");
     }
 
     const event = new Event({
@@ -56,21 +56,17 @@ exports.createEvent = async (req, res) => {
         });
     } catch (error) {
         console.error(error); // Log de erro
-        if (error.name === 'ValidationError') {
-            return res.status(422).send(error.message);
-        }
-        res.status(500).send("Erro ao criar evento: " + error.message);
+        res.status(500).send("Erro ao criar evento");
     }
 };
-
 
 // Atualizar um evento por ID
 exports.updateEvent = async (req, res) => {
     const { image_url, title, description, date, time, type, pay, localgoogleurl } = req.body;
 
     // Validação simples
-    if (!title || !description || !date || !time || !type || localgoogleurl === undefined || pay === undefined) {
-        return res.status(400).send("Todos os campos são obrigatórios.");
+    if (!title || !description || !date) {
+        return res.status(400).send("Os campos 'title', 'description' e 'date' são obrigatórios.");
     }
 
     try {
@@ -98,13 +94,9 @@ exports.updateEvent = async (req, res) => {
         });
     } catch (error) {
         console.error(error); // Log de erro
-        if (error.name === 'ValidationError') {
-            return res.status(422).send(error.message);
-        }
-        res.status(500).send("Erro ao atualizar evento: " + error.message);
+        res.status(500).send("Erro ao atualizar evento");
     }
 };
-
 
 // Deletar um evento por ID
 exports.deleteEvent = async (req, res) => {

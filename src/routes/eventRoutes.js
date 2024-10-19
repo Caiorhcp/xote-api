@@ -8,10 +8,11 @@ router.use((req, res, next) => {
     next();
 });
 
-router.get('/', eventController.getAllEvents);
-router.get('/:id', eventController.getEventById);
-router.post('/', eventController.createEvent);
-router.put('/:id', eventController.updateEvent);
-router.delete('/:id', eventController.deleteEvent);
+// Roteadores de eventos
+router.get('/', eventController.getAllEvents);         // Obter todos os eventos
+router.get('/:id', eventController.getEventById);      // Obter evento por ID
+router.post('/', eventController.createEvent);         // Criar novo evento
+router.put('/:id', eventController.updateEvent);       // Atualizar evento por ID
+router.delete('/:id', eventController.deleteEvent);    // Deletar evento por ID
 
 module.exports = router;

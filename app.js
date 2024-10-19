@@ -5,7 +5,18 @@ const connectDB = require('./config/database'); // Importar a função de conex�
 const eventRoutes = require('./src/routes/eventRoutes'); // Importar as rotas dos eventos
 
 const app = express();
-app.use(cors()); // Habilitar CORS
+
+// Middleware para habilitar CORS com controle de origens
+app.use(cors((req, callback) => {
+    const allowedOrigins = ['http://localhost:3000'];
+    const origin = req.header('Origin');
+    if (allowedOrigins.includes(origin)) {
+        callback(null, true);
+    } else {
+        callback(new Error('Não permitido por CORS'));
+    }
+}));
+
 app.use(express.json()); // Permitir que a aplicação receba JSON
 
 const port = process.env.PORT || 3000; // Usar a porta definida nas variáveis de ambiente ou 3000 como padrão

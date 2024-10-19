@@ -56,9 +56,13 @@ exports.createEvent = async (req, res) => {
         });
     } catch (error) {
         console.error(error); // Log de erro
-        res.status(500).send("Erro ao criar evento");
+        if (error.name === 'ValidationError') {
+            return res.status(422).send(error.message);
+        }
+        res.status(500).send("Erro ao criar evento: " + error.message);
     }
 };
+
 
 // Atualizar um evento por ID
 exports.updateEvent = async (req, res) => {
@@ -94,9 +98,13 @@ exports.updateEvent = async (req, res) => {
         });
     } catch (error) {
         console.error(error); // Log de erro
-        res.status(500).send("Erro ao atualizar evento");
+        if (error.name === 'ValidationError') {
+            return res.status(422).send(error.message);
+        }
+        res.status(500).send("Erro ao atualizar evento: " + error.message);
     }
 };
+
 
 // Deletar um evento por ID
 exports.deleteEvent = async (req, res) => {

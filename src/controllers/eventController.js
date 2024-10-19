@@ -71,7 +71,6 @@ exports.updateEvent = async (req, res) => {
             localgoogleurl,
         }, {
             new: true,
-            runValidators: true // Isso ajuda a garantir que os dados sejam válidos conforme o esquema
         });
 
         if (!event) {

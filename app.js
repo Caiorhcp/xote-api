@@ -8,7 +8,7 @@ const app = express();
 
 // Middleware para habilitar CORS com controle de origens
 app.use(cors((req, callback) => {
-    const allowedOrigins = ['http://localhost:3000, xote-api-development.up.railway.app, xote-api-development.up.railway.app/xote'];
+    const allowedOrigins = ['http://localhost:3000', 'xote-api-development.up.railway.app', 'xote-api-development.up.railway.app/xote'];
     const origin = req.header('Origin');
     if (allowedOrigins.includes(origin)) {
         callback(null, true);

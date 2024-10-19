@@ -4,7 +4,9 @@ const Event = require('../models/eventModel');
 exports.getAllEvents = async (req, res) => {
     try {
         const events = await Event.find();
-        res.send(events);
+        res.send({
+            XoteEventos: events
+        });
     } catch (error) {
         res.status(500).send("Erro ao listar eventos");
     }
@@ -26,10 +28,14 @@ exports.getEventById = async (req, res) => {
 // Criar um novo evento
 exports.createEvent = async (req, res) => {
     const event = new Event({
+        image_url: req.body.image_url,
         title: req.body.title,
         description: req.body.description,
-        image_url: req.body.image_url,
         date: req.body.date,
+        time: req.body.time,
+        type: req.body.type,
+        pay: req.body.pay,
+        localgoogleurl: req.body.localgoogleurl,
     });
 
     try {
@@ -44,10 +50,14 @@ exports.createEvent = async (req, res) => {
 exports.updateEvent = async (req, res) => {
     try {
         const event = await Event.findByIdAndUpdate(req.params.id, {
-            title: req.body.title,
-            description: req.body.description,
-            image_url: req.body.image_url,
-            date: req.body.date,
+        image_url: req.body.image_url,
+        title: req.body.title,
+        description: req.body.description,
+        date: req.body.date,
+        time: req.body.time,
+        type: req.body.type,
+        pay: req.body.pay,
+        localgoogleurl: req.body.localgoogleurl,
         }, {
              new: true 
             });

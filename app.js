@@ -3,31 +3,33 @@ const express = require("express");
 const cors = require("cors"); 
 const connectDB = require('./config/database'); // Importar a função de conexão do banco de dados
 const eventRoutes = require('./src/routes/eventRoutes'); // Importar as rotas dos eventos
+const helmet = require('helmet'); // Importar helmet para segurança
 
 const app = express();
-
-// Middleware para habilitar CORS com controle de origens
-app.use(cors((req, callback) => {
-    const allowedOrigins = ['http://localhost:3000', 'xote-api-development.up.railway.app', 'xote-api-development.up.railway.app/xote'];
-    const origin = req.header('Origin');
-    if (allowedOrigins.includes(origin)) {
-        callback(null, true);
-    } else {
-        callback(new Error('Não permitido por CORS'));
-    }
-}));
-
+app.use(cors()); // Habilitar CORS
+app.use(helmet()); // Adicionar segurança com Helmet
 app.use(express.json()); // Permitir que a aplicação receba JSON
 
 const port = process.env.PORT || 3000; // Usar a porta definida nas variáveis de ambiente ou 3000 como padrão
 
 // Conectar ao banco de dados
-connectDB(); // Função que se conecta ao MongoDB
+connectDB()
+    .then(() => {
+        // Usar rotas
+        app.use("/xote", eventRoutes); // Prefixo para as rotas de eventos
 
-// Usar rotas
-app.use("/xote", eventRoutes); // Prefixo para as rotas de eventos
+        // Iniciar o servidor
+        app.listen(port, () => {
+            console.log(`App running on port ${port}`); // Mensagem para indicar que o servidor está rodando
+        });
+    })
+    .catch(error => {
+        console.error("Erro ao conectar ao banco de dados:", error); // Log de erro na conexão
+        process.exit(1); // Sair do processo se a conexão falhar
+    });
 
-// Iniciar o servidor
-app.listen(port, () => {
-    console.log(`App running on port ${port}`); // Mensagem para indicar que o servidor está rodando
+// Middleware de tratamento de erros
+app.use((err, req, res, next) => {
+    console.error(err.stack); // Log de erro
+    res.status(500).send("Algo deu errado!"); // Resposta genérica de erro
 });

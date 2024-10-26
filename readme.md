@@ -64,7 +64,7 @@ Body: Selecione raw e JSON e insira o seguinte:
 
 ```bash
 {
-"image_url": "URL aqui",
+            "image_url": "URL aqui",
 			"title": "titulo",
 			"description": "Descrição",
 			"date": "26-10-2025",
@@ -90,7 +90,7 @@ Body: Selecione raw e JSON e insira o seguinte:
 
 ```bash
 {
-"image_url": "URL aqui",
+            "image_url": "URL aqui",
 			"title": "titulo",
 			"description": "Descrição",
 			"date": "26-10-2025",

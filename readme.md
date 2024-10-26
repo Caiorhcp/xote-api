@@ -2,8 +2,8 @@
 
 A XoteCariri API é uma API desenvolvida para gerenciar eventos na plataforma XoteCariri, que conecta os usuários a eventos na região de Juazeiro do Norte e Cariri. A API foi construída utilizando o padrão MVC (Model-View-Controller) para melhor organização e manutenibilidade do código.
 
-obs: link do postman https://www.postman.com/caio44/db-xote/collection/4htoo13/xote-api
 
+Obs: Mais informações no arquivo swagger, "use o swagger editor".
 ## Pré-requisitos
 
 Antes de começar, certifique-se de ter os seguintes softwares instalados:
@@ -46,7 +46,6 @@ node app.js
 
 O servidor deve iniciar e você verá a mensagem "app running" no terminal + "Conectado ao banco de dados" caso estiver usando o MongoDb.
 
-
 ## Como Utilizar a API
 Testando com o Postman
 Após iniciar o servidor, você pode utilizar o Postman para interagir com a API.
@@ -54,21 +53,25 @@ Após iniciar o servidor, você pode utilizar o Postman para interagir com a API
 Obter todos os eventos
 
 1. Método: GET
-URL: http://localhost:3000/xote
+URL: http://localhost:3000/xote/get
 Descrição: Retorna todos os eventos. 
 
 2. Criar um novo evento
 
 Método: POST
-URL: http://localhost:3000/xote
+URL: http://localhost:3000/xote/post
 Body: Selecione raw e JSON e insira o seguinte:
 
 ```bash
 {
-    "title": "Festival de Música Cariri",
-    "description": "Um festival com apresentações de bandas regionais.",
-    "image_url": "https://example.com/festival.jpg",
-    "data": "2024-12-01"
+"image_url": "URL aqui",
+			"title": "titulo",
+			"description": "Descrição",
+			"date": "26-10-2025",
+			"time": "20:00",
+			"pay": false,
+			"type": "Futebol",
+			"localgoogleurl": "Link do google maps verdadeiro"
 }
 ```
 Descrição: Cria um novo evento e retorna o evento criado.
@@ -76,21 +79,25 @@ Descrição: Cria um novo evento e retorna o evento criado.
 3. Obter um evento por ID
 
 Método: GET
-URL: http://localhost:3000/xote/{id} (substitua {id} pelo ID do evento)
+URL: http://localhost:3000/xote/put/{id} (substitua {id} pelo ID do evento)
 Descrição: Retorna os detalhes de um evento específico.
 
 4. Atualizar um evento por ID
 
 Método: PUT
-URL: http://localhost:3000/xote/{id} (substitua {id} pelo ID do evento)
+URL: http://localhost:3000/xote/delete/{id} (substitua {id} pelo ID do evento)
 Body: Selecione raw e JSON e insira o seguinte:
 
 ```bash
 {
-    "title": "Festival de Música Atualizado",
-    "description": "Descrição atualizada do festival.",
-    "image_url": "https://example.com/festival-atualizado.jpg",
-    "data": "2024-12-02"
+"image_url": "URL aqui",
+			"title": "titulo",
+			"description": "Descrição",
+			"date": "26-10-2025",
+			"time": "20:00",
+			"pay": false,
+			"type": "Futebol",
+			"localgoogleurl": "Link do google maps verdadeiro"
 }
 ```
 Descrição: Atualiza um evento específico e retorna o evento atualizado.

@@ -10,7 +10,9 @@ router.use((req, res, next) => {
 
 // Roteadores de eventos
 router.get('/get', eventController.getAllEvents);                  // Obter todos os eventos
-router.get('/get/:id', eventController.getEventById);               // Obter evento por ID
+router.get('/get/:id', eventController.getEventById);   
+
+router.get('/recent', eventController.getRecentEvents);// Obter evento por ID
 
 router.get('/paid', eventController.getPaidEvents);                 // Obter todos os eventos pagos
 router.get('/free', eventController.getFreeEvents);                 // Obter todos os eventos gratuitos

@@ -315,3 +315,20 @@ exports.getEventsByType = async (req, res) => {
         res.status(500).json({ message: 'Erro ao buscar eventos.' });
     }
 };
+
+// Listar eventos recentes
+exports.getRecentEvents = async (req, res) => {
+    const limit = parseInt(req.query.limit) || 10;//limite de eventos sendo listados
+
+    try {
+        const events = await Event.find().sort({ createdAt: -1 }).limit(limit);
+        res.send({
+            message: "Eventos recentes listados com sucesso",
+            XoteEventos: events,
+            count: events.length,
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Erro ao listar eventos recentes");
+    }
+};

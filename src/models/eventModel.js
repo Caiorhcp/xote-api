@@ -68,7 +68,7 @@ const eventSchema = new mongoose.Schema({
             message: "URL do local no Google Maps inválida."
         }
     },
-});
+}, { timestamps: true }); 
 
 const Event = mongoose.model('Event', eventSchema);
 module.exports = Event;

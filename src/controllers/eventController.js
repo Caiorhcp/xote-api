@@ -1,5 +1,16 @@
 const Event = require('../models/eventModel');
 
+
+const normalizeString = (str) => {
+    // Normaliza a string removendo acentos e convertendo para minúsculas
+    return str
+        .normalize("NFD") // Normaliza a string para decompor caracteres
+        .replace(/[\u0300-\u036f]/g, "") // Remove os acentos
+        .toLowerCase(); // Converte para minúsculas
+};
+
+
+
 // Listar todos os eventos
 exports.getAllEvents = async (req, res) => {
     try {
@@ -145,7 +156,7 @@ exports.getEventsByDateDesc = async (req, res) => {
 
 // Criar um novo evento
 exports.createEvent = async (req, res) => {
-    const { image_url, title, description, date, time, type, pay, price, localgoogleurl } = req.body;
+    const { image_url, title, city, local, localDescription, description, date, time, type, pay, isFavorite, price, localgoogleurl } = req.body;
 
     // Verificar se o evento é pago e se o preço foi fornecido
     if (pay && (price === undefined || price === null)) {
@@ -164,12 +175,16 @@ exports.createEvent = async (req, res) => {
     const event = new Event({
         image_url,
         title,
+        city,
+        local,
+        localDescription,
         description,
-        date: formattedDate, // Use a data formatada
+        date: formattedDate, 
         time,
         type,
         pay,
-        price: pay ? parseFloat(price) : undefined, // Converte para float se for pago
+        isFavorite,
+        price: pay ? parseFloat(price) : undefined, 
         localgoogleurl,
     });
 
@@ -187,7 +202,7 @@ exports.createEvent = async (req, res) => {
 
 // Atualizar um evento por ID
 exports.updateEvent = async (req, res) => {
-    const { image_url, title, description, date, time, type, pay, price, localgoogleurl } = req.body;
+    const { image_url, title, city, local, localDescription, description, date, time, type, pay, price, isFavorite, localgoogleurl } = req.body;
 
     // Verificar se o evento é pago e se o preço foi fornecido
     if (pay && (price === undefined || price === null)) {
@@ -215,12 +230,16 @@ exports.updateEvent = async (req, res) => {
         const event = await Event.findByIdAndUpdate(req.params.id, {
             image_url,
             title,
+            city,
+            local,
+            localDescription,
             description,
-            date: formattedDate || date, // Use a data formatada se fornecida ou mantenha a original
+            date: formattedDate || date, 
             time,
             type,
             pay,
-            price: pay ? parseFloat(price) : undefined, // Converte para float se for pago
+            price: pay ? parseFloat(price) : undefined, 
+            isFavorite,
             localgoogleurl,
         }, {
             new: true,
@@ -330,5 +349,96 @@ exports.getRecentEvents = async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).send("Erro ao listar eventos recentes");
+    }
+};
+
+// Listar todos os eventos favoritos
+exports.getFavoriteEvents = async (req, res) => {
+    try {
+        const events = await Event.find({ isFavorite: true });
+        res.send({
+            XoteEventos: events,
+            count: events.length,
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Erro ao listar Favoritos");
+    }
+};
+
+// Listar eventos por cidade
+exports.getEventsByCity = async (req, res) => {
+    const cityName = req.params.city; 
+    const normalizedCityName = normalizeString(cityName); 
+
+    try {
+        // Busca os eventos normalizando o campo 'city' no banco de dados
+        const events = await Event.find({
+            city: { $regex: normalizedCityName, $options: 'i' },
+        });
+
+        if (events.length === 0) {
+            return res.status(404).send({ message: "Nenhum evento encontrado para esta cidade" });
+        }
+        
+        res.send({
+            XoteEventos: events,
+            count: events.length,
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Erro ao listar eventos da cidade");
+    }
+};
+
+// Favoritar um evento
+exports.favoriteEvent = async (req, res) => {
+    const eventId = req.params.id; 
+
+    try {
+        // Atualiza o evento para marcar como favorito
+        const event = await Event.findByIdAndUpdate(
+            eventId,
+            { isFavorite: true },
+            { new: true }
+        );
+
+        if (!event) {
+            return res.status(404).send({ message: "Evento não encontrado" });
+        }
+
+        res.send({
+            message: "Evento favoritado com sucesso",
+            event,
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Erro ao favoritar o evento");
+    }
+};
+
+// Desfavoritar um evento
+exports.unfavoriteEvent = async (req, res) => {
+    const eventId = req.params.id; 
+
+    try {
+        // Atualiza o evento para desfavoritar
+        const event = await Event.findByIdAndUpdate(
+            eventId,
+            { isFavorite: false }, 
+            { new: true } 
+        );
+
+        if (!event) {
+            return res.status(404).send({ message: "Evento não encontrado" });
+        }
+
+        res.send({
+            message: "Evento desfavoritado com sucesso",
+            event,
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Erro ao desfavoritar o evento");
     }
 };

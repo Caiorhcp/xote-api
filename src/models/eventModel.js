@@ -25,11 +25,31 @@ const eventSchema = new mongoose.Schema({
         minlength: 5, 
         maxlength: 100 
     },
+    
+    city: { 
+        type: String,
+        required: true,
+        minlength: 1, 
+        maxlength: 50 
+    },
+
+    local: {
+        type: String,
+        required: true,
+        minlength: 1, 
+        maxlength: 50
+    },
+    localDescription: {
+        type: String,
+        required: true,
+        minlength: 1,
+        maxlength: 500
+    },
     description: { 
         type: String, 
         required: true,
         minlength: 1,
-        maxlength: 1000 
+        maxlength: 500 
     },
     date: { 
         type: Date, 
@@ -59,6 +79,10 @@ const eventSchema = new mongoose.Schema({
         type: Number, 
         required: function() { return this.pay; }, 
         min: 0 
+    },
+    isFavorite: { 
+        type: Boolean, 
+        required: true 
     },
     localgoogleurl: { 
         type: String, 

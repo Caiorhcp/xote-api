@@ -442,3 +442,27 @@ exports.unfavoriteEvent = async (req, res) => {
         res.status(500).send("Erro ao desfavoritar o evento");
     }
 };
+
+// Função para atualizar o status de favorito do evento
+exports.updateFavoriteStatus = async (req, res) => {
+    try {
+        const eventId = req.params.id;
+        const { isFavorite } = req.body;  // A nova flag de favorito será passada no corpo da requisição
+        
+        // Encontrando o evento no banco de dados
+        const event = await Event.findById(eventId);
+
+        if (!event) {
+            return res.status(404).send("Evento não encontrado");
+        }
+
+        // Atualizando o status de favorito
+        event.isFavorite = isFavorite;  // Atualiza o status de favorito para o valor passado na requisição
+        await event.save();
+
+        res.status(200).send({ message: "Status de favorito atualizado com sucesso", event });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Erro ao atualizar o status de favorito");
+    }
+};

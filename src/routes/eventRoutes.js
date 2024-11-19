@@ -38,6 +38,9 @@ router.post('/favorite/:id', eventController.favoriteEvent); // Favoritar evento
 router.post('/unfavorite/:id', eventController.unfavoriteEvent); // Desfavoritar evento por ID
 
 router.put('/put/:id', eventController.updateEvent);                 // Atualizar evento por ID
+router.put('/:id/favorite', eventController.updateFavoriteStatus); //Atualizar favorito por ID
+
+
 
 router.delete('/delete/:id', eventController.deleteEvent);           // Deletar evento por ID
 router.delete('/deleteAll', eventController.deleteAllEvents);        // Deletar todos os eventos

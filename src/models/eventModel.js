@@ -82,7 +82,6 @@ const eventSchema = new mongoose.Schema({
     },
     isFavorite: { 
         type: Boolean, 
-        required: true 
     },
     localgoogleurl: { 
         type: String, 

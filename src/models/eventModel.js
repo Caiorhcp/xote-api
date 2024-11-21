@@ -25,14 +25,12 @@ const eventSchema = new mongoose.Schema({
         minlength: 5, 
         maxlength: 100 
     },
-    
     city: { 
         type: String,
         required: true,
         minlength: 1, 
         maxlength: 50 
     },
-
     local: {
         type: String,
         required: true,
@@ -91,7 +89,17 @@ const eventSchema = new mongoose.Schema({
             message: "URL do local no Google Maps inválida."
         }
     },
-}, { timestamps: true }); 
+}, { timestamps: true });
+
+// Pre-save hook para converter a data para o formato correto
+eventSchema.pre('save', function(next) {
+    if (this.date) {
+        const [day, month, year] = this.date.split("-");
+        const formattedDate = new Date(`${year}-${month}-${day}`);
+        this.date = formattedDate; // Atualiza a data para o formato correto
+    }
+    next();
+});
 
 const Event = mongoose.model('Event', eventSchema);
 module.exports = Event;

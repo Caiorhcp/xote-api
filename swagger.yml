@@ -1,69 +1,247 @@
 openapi: 3.0.0
 info:
   title: XoteCariri API
-  description: API para gerenciar eventos do XoteCariri
+  description: |
+    API para gerenciamento e consulta de eventos na região de Juazeiro do Norte e Cariri.
+
+    **URL Principal da API:**
+    ```
+    https://xote-api-development.up.railway.app/xote
+    ```
+
+    Substitua `{endpoint}` pelos endpoints listados abaixo para realizar suas requisições.
   version: 1.0.0
 servers:
-  - url: http://localhost:3000/xote
+  - url: https://xote-api-development.up.railway.app/xote
+    description: URL principal da API
 paths:
-  /xote:
+  /get:
     get:
-      summary: Retorna todos os eventos
+      summary: Lista todos os eventos
       responses:
         '200':
-          description: Lista de eventos
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Event'
+          description: Lista de eventos retornada com sucesso
+        '500':
+          description: Erro interno do servidor
+
+  /get/{id}:
+    get:
+      summary: Consulta um evento específico por ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: ID do evento
+      responses:
+        '200':
+          description: Evento retornado com sucesso
+        '404':
+          description: Evento não encontrado
+        '500':
+          description: Erro interno do servidor
+
+  /recent:
+    get:
+      summary: Lista eventos mais recentes
+      responses:
+        '200':
+          description: Lista de eventos recentes retornada com sucesso
+        '500':
+          description: Erro interno do servidor
+
+  /isFavoriteTrue:
+    get:
+      summary: Lista eventos marcados como favoritos
+      responses:
+        '200':
+          description: Lista de eventos favoritos retornada com sucesso
+        '500':
+          description: Erro interno do servidor
+
+  /city/{nomeDaCity}:
+    get:
+      summary: Lista eventos por cidade
+      parameters:
+        - in: path
+          name: nomeDaCity
+          required: true
+          schema:
+            type: string
+          description: Nome da cidade
+      responses:
+        '200':
+          description: Lista de eventos da cidade retornada com sucesso
+        '404':
+          description: Cidade não encontrada
+        '500':
+          description: Erro interno do servidor
+
+  /paid:
+    get:
+      summary: Lista eventos pagos
+      responses:
+        '200':
+          description: Lista de eventos pagos retornada com sucesso
+        '500':
+          description: Erro interno do servidor
+
+  /paid/desc:
+    get:
+      summary: Lista eventos pagos em ordem decrescente de preço
+      responses:
+        '200':
+          description: Lista de eventos pagos (ordem decrescente) retornada com sucesso
+        '500':
+          description: Erro interno do servidor
+
+  /paid/asc:
+    get:
+      summary: Lista eventos pagos em ordem crescente de preço
+      responses:
+        '200':
+          description: Lista de eventos pagos (ordem crescente) retornada com sucesso
+        '500':
+          description: Erro interno do servidor
+
+  /free:
+    get:
+      summary: Lista eventos gratuitos
+      responses:
+        '200':
+          description: Lista de eventos gratuitos retornada com sucesso
+        '500':
+          description: Erro interno do servidor
+
+  /date/desc:
+    get:
+      summary: Lista eventos em ordem decrescente de data
+      responses:
+        '200':
+          description: Lista de eventos (ordem decrescente) retornada com sucesso
+        '500':
+          description: Erro interno do servidor
+
+  /date/asc:
+    get:
+      summary: Lista eventos em ordem crescente de data
+      responses:
+        '200':
+          description: Lista de eventos (ordem crescente) retornada com sucesso
+        '500':
+          description: Erro interno do servidor
+
+  /put/{id}:
+    put:
+      summary: Atualiza os dados de um evento
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: ID do evento a ser atualizado
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                image_url:
+                  type: string
+                title:
+                  type: string
+                local:
+                  type: string
+                localDescription:
+                  type: string
+                description:
+                  type: string
+                date:
+                  type: string
+                time:
+                  type: string
+                pay:
+                  type: boolean
+                price:
+                  type: number
+                type:
+                  type: string
+                localgoogleurl:
+                  type: string
+              example:
+                image_url: "https://example.com/event.jpg"
+                title: "Evento Teste"
+                local: "Juazeiro do Norte"
+                localDescription: "Descrição do local do evento."
+                description: "Descrição do evento."
+                date: "26-10-2024"
+                time: "20:00"
+                pay: true
+                price: 50.0
+                type: "Cultural"
+                localgoogleurl: "https://maps.google.com/example"
+      responses:
+        '200':
+          description: Evento atualizado com sucesso
+        '404':
+          description: Evento não encontrado
+        '500':
+          description: Erro interno do servidor
+
+  /post:
     post:
       summary: Cria um novo evento
       requestBody:
+        required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Event'
+              type: object
+              properties:
+                image_url:
+                  type: string
+                title:
+                  type: string
+                local:
+                  type: string
+                localDescription:
+                  type: string
+                description:
+                  type: string
+                date:
+                  type: string
+                time:
+                  type: string
+                pay:
+                  type: boolean
+                price:
+                  type: number
+                type:
+                  type: string
+                localgoogleurl:
+                  type: string
+              example:
+                image_url: "https://example.com/event.jpg"
+                title: "Evento Teste"
+                local: "Juazeiro do Norte"
+                localDescription: "Descrição do local do evento."
+                description: "Descrição do evento."
+                date: "26-10-2024"
+                time: "20:00"
+                pay: true
+                price: 50.0
+                type: "Cultural"
+                localgoogleurl: "https://maps.google.com/example"
       responses:
         '201':
-          description: Evento criado
-  /xote/{id}:
-    get:
-      summary: Retorna um evento por ID
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: Detalhes do evento
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Event'
-        '404':
-          description: Evento não encontrado
-    put:
-      summary: Atualiza um evento por ID
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Event'
-      responses:
-        '200':
-          description: Evento atualizado
-        '404':
-          description: Evento não encontrado
+          description: Evento criado com sucesso
+        '500':
+          description: Erro interno do servidor
+
+  /delete/{id}:
     delete:
       summary: Deleta um evento por ID
       parameters:
@@ -72,25 +250,11 @@ paths:
           required: true
           schema:
             type: string
+          description: ID do evento a ser deletado
       responses:
         '200':
-          description: Evento deletado
+          description: Evento deletado com sucesso
         '404':
           description: Evento não encontrado
-components:
-  schemas:
-    Event:
-      type: object
-      properties:
-        title:
-          type: string
-          example: "Festival de Música Cariri"
-        description:
-          type: string
-          example: "Um festival com apresentações de bandas regionais."
-        image_url:
-          type: string
-          example: "https://example.com/festival.jpg"
-        data:
-          type: string
-          example: "2024-12-01"
+        '500':
+          description: Erro interno do servidor

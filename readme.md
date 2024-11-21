@@ -1,157 +1,179 @@
 # XoteCariri API
 
-A XoteCariri API é uma API desenvolvida para gerenciar eventos na plataforma XoteCariri, que conecta os usuários a eventos na região de Juazeiro do Norte e Cariri. A API foi construída utilizando o padrão MVC (Model-View-Controller) para melhor organização e manutenibilidade do código.
+A **XoteCariri API** é uma solução desenvolvida para gerenciar eventos na plataforma **XoteCariri**, que conecta os usuários a eventos na região de Juazeiro do Norte e Cariri. Foi projetada por **Caio Vinicius Gonçalves de Sousa**, **Giovanny Lucas** e **Lucas Vieira**, como parte de um projeto acadêmico.  
+A API utiliza **Node.js**, **Express**, **MongoDB** e **Mongoose**, seguindo o padrão **MVC** (Model-View-Controller), o que garante organização, escalabilidade e manutenibilidade do código.
 
+---
 
-Obs: Mais informações no arquivo swagger, "use o swagger editor".
+**Link do Postman Collection**
+### https://www.postman.com/caio44/db-xote/folder/eub81mm/collections?action=share&source=copy-link&creator=38010609&ctx=documentation
+
+## URL Principal da API
+
+**Base URL**:  
+`https://xote-api-development.up.railway.app/xote/{endpoint}`
+
+### Endpoints Públicos
+
+#### **GET**
+- `/get` – Retorna todos os eventos.  
+- `/get/{id}` – Retorna um evento específico pelo ID.  
+- `/recent` – Retorna os eventos mais recentes.  
+- `/isFavoriteTrue` – Retorna os eventos marcados como favoritos.  
+- `/city/{nome_da_city}` – Retorna eventos de uma cidade específica.  
+- `/paid` – Retorna eventos pagos.  
+- `/paid/desc` – Retorna eventos pagos ordenados por preço decrescente.  
+- `/paid/asc` – Retorna eventos pagos ordenados por preço crescente.  
+- `/free` – Retorna eventos gratuitos.  
+- `/date/desc` – Retorna eventos ordenados por data decrescente.  
+- `/date/asc` – Retorna eventos ordenados por data crescente.
+
+#### **POST**
+- `/post` – Cria um novo evento.
+
+#### **PUT**
+- `/put/{id}` – Atualiza os dados de um evento pelo ID.
+
+#### **DELETE**
+- `/delete/{id}` – Remove um evento específico pelo ID.
+
+---
+
+## Tecnologias Utilizadas
+
+- **Node.js**  
+- **Express**  
+- **MongoDB**  
+- **Mongoose**  
+- **Swagger** (para documentação da API)
+
+---
+
 ## Pré-requisitos
 
-Antes de começar, certifique-se de ter os seguintes softwares instalados:
+Antes de começar, você precisará ter:
 
 - [Node.js](https://nodejs.org/) (versão 14 ou superior)
-- [MongoDB](https://www.mongodb.com/) (ou acesso a um cluster MongoDB no Atlas)
-- [Postman](https://www.postman.com/) (opcional, para testar a API)
+- [MongoDB](https://www.mongodb.com/) (ou um cluster MongoDB no Atlas)
+- [Postman](https://www.postman.com/) (opcional, para testes)
 
-## Configuração do Ambiente
+---
+
+## Configuração do Projeto
 
 1. **Clone o Repositório**
 
    ```bash
    git clone https://github.com/Caiorhcp/xote-api.git
-   ``` 
-2. Instale as Dependências
+   cd xote-api
+
+2. **Instale as Dependências**
 
 ```bash
-npm install 
+npm install
+```
+3. **Configuração do Banco de Dados**
+
+Configure um banco no MongoDB Atlas ou localmente. Crie um arquivo .env na raiz do projeto com as variáveis de ambiente:
+
+env
+```bash
+DATABASE_URI=mongodb+srv://<USERNAME>:<PASSWORD>@cluster.mongodb.net/xote?retryWrites=true&w=majority
 ```
 
-
-3. Configuração do Banco de Dados
-Crie um banco de dados no MongoDB ou utilize um cluster no MongoDB Atlas. Em seguida, crie um arquivo .env na raiz do projeto e adicione a seguinte variável de ambiente, substituindo <USERNAME> e <PASSWORD> pelas suas credenciais do MongoDB:
-
-Exemplo figurativo
+4. **Inicie o Servidor**
 
 ```bash
-module.exports = {
-    dbURI: 'mongodb+srv://<USERNAME>:<PASSWORD>@xote.0mz6p.mongodb.net/xote?retryWrites=true&w=majority'
-};
+npm start
+O servidor estará disponível em http://localhost:3000/
 ```
 
-4. Inicie o Servidor
+5. **Testando a API**
+Aqui estão alguns exemplos de como interagir com os endpoints utilizando o Postman:
 
-Execute o seguinte comando no terminal:
-```bash
-node app.js
-```
-
-O servidor deve iniciar e você verá a mensagem "app running" no terminal + "Conectado ao banco de dados" caso estiver usando o MongoDb.
-
-## Como Utilizar a API
-Testando com o Postman
-Após iniciar o servidor, você pode utilizar o Postman para interagir com a API.
-
-Obter todos os eventos
-
-1. Método: GET
-URL: http://localhost:3000/xote/get
-Descrição: Retorna todos os eventos. 
-
-2. Criar um novo evento
-
-Método: POST
-URL: http://localhost:3000/xote/post
-Body: Selecione raw e JSON e insira o seguinte:
-
-```bash
-{
-            "image_url": "URL aqui",
-			"title": "titulo",
-			"description": "Descrição",
-			"date": "26-10-2025",
-			"time": "20:00",
-			"pay": false,
-			"type": "Futebol",
-			"localgoogleurl": "Link do google maps verdadeiro"
-}
-```
-Descrição: Cria um novo evento e retorna o evento criado.
-
-3. Obter um evento por ID
-
+1. Listar Todos os Eventos
 Método: GET
-URL: http://localhost:3000/xote/put/{id} (substitua {id} pelo ID do evento)
-Descrição: Retorna os detalhes de um evento específico.
+URL: /get
+2. Criar um Novo Evento
+Método: POST
 
-4. Atualizar um evento por ID
+URL: /post
 
-Método: PUT
-URL: http://localhost:3000/xote/delete/{id} (substitua {id} pelo ID do evento)
-Body: Selecione raw e JSON e insira o seguinte:
+Body (JSON):
 
+json
 ```bash
+Copy code
 {
-            "image_url": "URL aqui",
-			"title": "titulo",
-			"description": "Descrição",
-			"date": "26-10-2025",
-			"time": "20:00",
-			"pay": false,
-			"type": "Futebol",
-			"localgoogleurl": "Link do google maps verdadeiro"
+  "image_url": "https://example.com/event.jpg",
+  "title": "Evento Teste",
+  "local": local,
+  "localDescription": descricao,
+  "description": "Descrição do evento.",
+  "date": "26-10-2024",
+  "time": "20:00",
+  "pay": true,
+  "price": 01.50,
+  "type": "Cultural",
+  "localgoogleurl": "https://maps.google.com/example"
 }
 ```
-Descrição: Atualiza um evento específico e retorna o evento atualizado.
+3. Atualizar um Evento por ID
+Método: PUT
 
-5. Deletar um evento por ID
+URL: /put/{id}
 
+Body (JSON):
+
+json
+```bash
+{
+  "image_url": "https://example.com/event.jpg",
+  "title": "Evento Teste",
+  "local": local,
+  "localDescription": descricao,
+  "description": "Descrição do evento.",
+  "date": "26-10-2024",
+  "time": "20:00",
+  "pay": true,
+  "price": 01.50,
+  "type": "Cultural",
+  "localgoogleurl": "https://maps.google.com/example"
+}
+```
+4. Deletar um Evento
 Método: DELETE
-URL: http://localhost:3000/xote/{id} (substitua {id} pelo ID do evento)
-Descrição: Deleta um evento específico.
-
-
-## Estrutura do Projeto
-
-O projeto segue o padrão MVC (Model-View-Controller), que ajuda a organizar e separar as responsabilidades do código. Isso facilita a manutenção, escalabilidade e entendimento do projeto.
-
-## Padrão MVC
-
-Model (Modelo): Representa a estrutura dos dados e as interações com o banco de dados. Na XoteCariri API, o modelo de eventos é definido utilizando o Mongoose.
-View (Visualização): Como estamos desenvolvendo uma API, o conceito de "view" é tratado como as respostas JSON enviadas aos clientes, que podem ser consumidas por qualquer front-end ou outra aplicação.
-Controller (Controlador): Responsável por lidar com as requisições, realizar as operações de negócio e devolver a resposta apropriada. Os controladores manipulam as requisições HTTP e interagem com os modelos.
-Estrutura de Diretórios
+URL: /delete/{id}
+Estrutura do Projeto
+A aplicação foi estruturada utilizando o padrão MVC:
 
 ```bash
+
 /project-root
 │
-├── /controllers      # Controladores para gerenciar a lógica das requisições
+├── /controllers      # Lógica de negócios
 │   └── eventController.js
 │
-├── /models           # Modelos do Mongoose para definir a estrutura dos dados
+├── /models           # Modelos do MongoDB com Mongoose
 │   └── eventModel.js
 │
-├── /routes           # Definição das rotas da API
+├── /routes           # Rotas da API
 │   └── eventRoutes.js
 │
-├── /config           # Arquivos de configuração, como a conexão com o banco de dados
+├── /config           # Configurações do projeto
 │   └── database.js
 │
-├── app.js            # Arquivo principal da aplicação, onde as rotas e o servidor são configurados
-├── .env              # Variáveis de ambiente
-├── package.json      # Arquivo de configuração do Node.js
+├── app.js            # Arquivo principal da aplicação
+├── package.json      # Dependências do projeto
+└── .env              # Variáveis de ambiente
 ```
+# Contribuidores
 
-## Benefícios do uso de MVC
-O padrão MVC é uma abordagem amplamente utilizada em sistemas maiores devido à separação de responsabilidades:
+## Caio Vinicius Gonçalves de Sousa
+## Giovanny Lucas
+## Lucas Vieira
 
-Organização: O código fica mais modular, fácil de entender e de manter.
-Reusabilidade: Facilita o reaproveitamento de componentes do código (controladores e modelos).
-Escalabilidade: Com a separação de lógica de controle, regras de negócios e dados, é mais fácil adicionar novas funcionalidades sem gerar dependências desnecessárias.
-Manutenção: Ao isolar o código em camadas, identificar e corrigir erros se torna mais simples.
+## Observações
+A documentação detalhada da API pode ser acessada pelo arquivo Swagger incluído no repositório. Para visualizá-lo, utilize o Swagger Editor.
 
-# Obrigado pela atenção
-
-## Developers:
-
-### Caio Gonçalves 
-### Giovanny Lucas
-### Lucas Vieira
+## Obrigado pela atenção!

@@ -91,9 +91,10 @@ const eventSchema = new mongoose.Schema({
     },
 }, { timestamps: true });
 
-// Pre-save hook para converter a data para o formato correto
+// Pre-save hook para garantir que a data seja no formato correto
 eventSchema.pre('save', function(next) {
-    if (this.date) {
+    if (typeof this.date === 'string') {
+        // Se a data for uma string, converta para o formato Date
         const [day, month, year] = this.date.split("-");
         const formattedDate = new Date(`${year}-${month}-${day}`);
         this.date = formattedDate; // Atualiza a data para o formato correto
